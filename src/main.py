@@ -1,11 +1,11 @@
 from regex_processing.validator import is_balanced, is_empty, validate_syntax
-from regex_processing.transformer import extend_unary_operands
+from regex_processing.transformer import extend_unary_operands, explicit_concat
 
 def main():
     expressions =[")a+|b+(c*",
-                  "(a|b|c)*",
+                  "(a|b|c)*d",
                   "(a|b)|(c|d)",
-                  "{abc}",
+                  "(abc)",
                   "ab|b+]",
                   "a}",
                   "(a|bc(",
@@ -13,7 +13,7 @@ def main():
                   "a?b?c?",
                   "a+?",
                   "a???",
-                  "(a?|b?)c",
+                  "(a?|b?)*c",
                   "(1|2|3)a*b+?",
                   "(a+|b)+b?",
                   "(aa*)|c*|a+",
@@ -24,7 +24,7 @@ def main():
                   "a+",
                   None,
                   "a|b",
-                  "{ab|}*|c",
+                  "(ab|)*|c",
                 ]
     for regex in expressions:
         try:
@@ -34,7 +34,9 @@ def main():
             validate_syntax(regex)
             print(f"{regex} is Valid.")
             new_regex = extend_unary_operands(regex)
-            print(f"Extended: {new_regex}\n")
+            print(f"Extended: {new_regex}")
+            new_regex = explicit_concat(new_regex)
+            print(f"Explicit Concatenation: {new_regex}\n")
         except Exception as e:
             print(f"Error: {e}\n")
         

@@ -59,3 +59,27 @@ def extend_unary_operands(subexpr):
             new_expr += char
         i += 1
     return new_expr
+
+
+def explicit_concat(regex):
+    """
+    Adds explicit concatenation operator ('·') between adjacent characters in a regular expression.
+
+    Args:
+        regex (str): The input regular expression.
+
+    Returns:
+        str: The regular expression with explicit concatenation operator.
+
+    """
+    result = ""
+    for i, char in enumerate(regex):
+        result += char
+        if i + 1 < len(regex):
+            next_char = regex[i + 1]
+            if (char not in all_operators.union({'(', 'ϵ'}) and next_char not in all_operators.union({')', 'ϵ'})) or \
+               (char == ')' and next_char not in all_operators.union({')', 'ϵ'})) or \
+               (char not in all_operators.union({'(', 'ϵ'}) and next_char == '('):
+                result += '·'
+    
+    return result
