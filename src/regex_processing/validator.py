@@ -6,6 +6,7 @@ closing_brackets = set(brackets.values())
 
 unary_operators = {'*', '+', '?'}  # Unary operators in regex
 binary_operators = {'·', '|'}    # Binary operators in regex
+all_operators = unary_operators | binary_operators # All operators in regex
 
 def is_balanced(regex):
     """

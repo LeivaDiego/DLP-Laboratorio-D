@@ -1,4 +1,5 @@
 from regex_processing.validator import is_balanced, is_empty, validate_syntax
+from regex_processing.transformer import extend_unary_operands
 
 def main():
     expressions =[")a+|b+(c*",
@@ -32,8 +33,10 @@ def main():
             is_empty(regex)
             validate_syntax(regex)
             print(f"{regex} is Valid.")
+            new_regex = extend_unary_operands(regex)
+            print(f"Extended: {new_regex}\n")
         except Exception as e:
-            print(f"Error: {e}")
+            print(f"Error: {e}\n")
         
 
 if __name__ == "__main__":
