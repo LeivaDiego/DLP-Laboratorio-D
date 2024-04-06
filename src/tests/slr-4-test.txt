@@ -1,0 +1,9 @@
+numberId = 2.4E+03;
+ieId = this_is_my_id;
+a = 24;
+b = 12;
+a / b;
+bool = a < b;
+_
+(a * 3.1E-04);
+*
