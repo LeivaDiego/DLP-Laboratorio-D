@@ -1,8 +1,28 @@
+import sys
 from regex_processing.check_lexical_errors import veryfy_syntax
 
 # Find all ocurrences of a substring in a string
 find_all = lambda string, substring: [i for i in range(len(string)) if string.startswith(substring, i)]
 
+def check_balanced_brackets(string):
+    """
+    Check if the given string has balanced brackets.
+
+    Args:
+        string (str): The string to check for balanced brackets.
+
+    Returns:
+        bool: True if the brackets are balanced, False otherwise.
+    """
+    stack = []
+    brackets = {'{': '}', '[': ']'}
+    for char in string:
+        if char in brackets:
+            stack.append(char)
+        elif char in brackets.values():
+            if not stack or brackets[stack.pop()] != char:
+                return False
+    return not stack
 
 def read_file_lines(file_path):
     """
@@ -134,11 +154,21 @@ def get_regular_definitions(file_lines):
             unparsed_regular_definitions.append(line)
 
     regular_definitions = {}
-
+    
     # regular definitions building
     for regular_definition in unparsed_regular_definitions:
         clean_regular_definition = regular_definition.replace("let ", "")
         key_value_definition = [string.strip() for string in clean_regular_definition.split("=")]
+        if len(key_value_definition) != 2:
+            sys.exit(f"Error: Invalid regular definition: {regular_definition}")
+        
+        if not (check_balanced_brackets(regular_definition)):
+            sys.exit(f"Error: Unbalanced brackets in regular definition: {regular_definition}")
+
+        if len(key_value_definition) != 2 or not key_value_definition[0] or not key_value_definition[1]:
+            sys.exit(f"Incomplete regular definition: '{regular_definition}'. Expecting 'let identifier = definition'.")
+
+
         regular_definitions[key_value_definition[0]] = key_value_definition[1]
 
     for definition in regular_definitions:
@@ -197,6 +227,8 @@ def get_file_initial_regex_and_tokens(file_lines):
             continue
 
         if (building_regex):
+            if not check_balanced_brackets(line):
+                sys.exit(f"Error: Unbalanced brackets in rule: {line}")
             yalex_file_regex += line
 
     yalex_file_regex = list(yalex_file_regex)
