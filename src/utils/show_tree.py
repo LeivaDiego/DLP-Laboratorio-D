@@ -17,7 +17,7 @@ def show_node(node, visual_tree):
             show_node(node.right, visual_tree)
 
 # Función para visualizar un árbol.
-def show_expression_tree(root, view=False):
+def show_expression_tree(root, view=True, name=""):
     visual_tree = graphviz.Digraph(comment="Expression Tree")
     show_node(root, visual_tree)
-    visual_tree.render("./out/tree-output", format="png", view=view)
+    visual_tree.render(f"./out/mega_tree{name}", format="png", view=view, cleanup=True)
