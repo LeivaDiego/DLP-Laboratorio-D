@@ -1,5 +1,6 @@
 from regex_processing.validator import is_balanced, is_empty, validate_syntax
 from regex_processing.transformer import extend_unary_operands, explicit_concat
+from regex_processing.postfix_converter import infix2postfix
 
 def main():
     expressions =[")a+|b+(c*",
@@ -25,6 +26,7 @@ def main():
                   None,
                   "a|b",
                   "(ab|)*|c",
+                  "((a|b)c)+"
                 ]
     for regex in expressions:
         try:
@@ -36,7 +38,9 @@ def main():
             new_regex = extend_unary_operands(regex)
             print(f"Extended: {new_regex}")
             new_regex = explicit_concat(new_regex)
-            print(f"Explicit Concatenation: {new_regex}\n")
+            print(f"Explicit Concatenation: {new_regex}")
+            postfix = infix2postfix(new_regex)
+            print(f"Postfix: {postfix}\n")
         except Exception as e:
             print(f"Error: {e}\n")
         
