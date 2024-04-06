@@ -138,4 +138,4 @@ def simulate_yalex_file(path, output_file, dfa, output_type, return_token):
                 file.write(token_to_write + " ")
 
     # Impresión de la simulación exitosa.
-    print(f"\nFile \"{path}\" simulated successfully. Check \"{output_file}\".\n")
+    print(f"\nFile simulated successfully. Check \"{output_file}\".\n")

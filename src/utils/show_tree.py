@@ -20,4 +20,4 @@ def show_node(node, visual_tree):
 def show_expression_tree(root, view=True, name=""):
     visual_tree = graphviz.Digraph(comment="Expression Tree")
     show_node(root, visual_tree)
-    visual_tree.render(f"./out/mega_tree{name}", format="png", view=view, cleanup=True)
+    visual_tree.render(f"./out/mega_tree_{name}", format="png", view=view, cleanup=True)
