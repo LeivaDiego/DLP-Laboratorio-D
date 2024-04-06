@@ -1,4 +1,4 @@
-from custom_exceptions import UnbalancedBrackets
+from utils.custom_exceptions import UnbalancedBrackets
 
 brackets = {'(': ')', '[': ']', '{': '}'}  # Mapping of opening and closing brackets
 opening_brackets = set(brackets.keys())
